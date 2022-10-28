@@ -12,7 +12,13 @@ pip3 install --no-cache-dir -r ./requirements.txt
 ### 运行
 
 ```shell
-DD_ENV=demo DD_SERVICE=python-profiling-demo DD_VERSION=v0.0.1 DD_PROFILING_ENABLED=true DD_AGENT_HOST=localhost DD_TRACE_AGENT_PORT=9529 ddtrace-run python3 server.py
+DD_ENV=demo \
+DD_SERVICE=python-profiling-demo \
+DD_VERSION=v0.0.1 \
+DD_PROFILING_ENABLED=true \
+DD_AGENT_HOST=localhost \
+DD_TRACE_AGENT_PORT=9529 \
+ddtrace-run python3 server.py
 ```
 
 ### 验证运行状态
