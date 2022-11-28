@@ -2,6 +2,8 @@
 
 观测云Continous Profiling 示例程序（python）
 
+## 宿主机运行
+
 ### 安装依赖
 
 ```shell
@@ -76,3 +78,12 @@ $ curl 'http://127.0.0.1:8080/movies?q=spider' | jq
 ]
 ```
 
+## Docker 下运行
+
+```shell
+$ docker build --build-arg DK_DATAWAY=<your-dataway-endpoint> -t python-profiling-demo .
+$ docker run -d python-profiling-demo
+```
+
+> DK_DATAWAY可以从观测云空间 [集成 -> Datakit](https://console.guance.com/integration/datakit) 页面复制，例如：
+> docker build --build-arg DK_DATAWAY=https://openway.guance.com?token=tkn_f5b2989ba6ab44bc988cf7e2aa4a6de3 -t python-profiling-demo .
