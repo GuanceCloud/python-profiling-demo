@@ -7,4 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 ARG DK_DATAWAY=https://openway.guance.com?token=tkn_f5b2989ba6ab44bc988cf7e2aa4a6de3
 
 RUN DK_DATAWAY=${DK_DATAWAY} bash -c "$(curl -L https://static.guance.com/datakit/install.sh)"
+RUN cp /usr/local/datakit/conf.d/profile/profile.conf.sample /usr/local/datakit/conf.d/profile/profile.conf
+
 CMD /bin/sh run.sh
