@@ -1,6 +1,6 @@
 # python-profiling-demo
 
-观测云Continous Profiling 示例程序（python）
+观测云Continuous Profiling 示例程序（python）
 
 ## 宿主机运行
 
