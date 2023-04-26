@@ -5,6 +5,8 @@ services:
     ports:
       - "8080:8080"
     container_name: movies-python
+    environment:
+      DD_AGENT_HOST: "datakit"
   datakit:
     image: pubrepo.jiagouyun.com/datakit/datakit:1.6.0
     container_name: datakit

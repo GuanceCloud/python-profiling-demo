@@ -100,4 +100,4 @@ $ docker-compose down
 > `DK_DATAWAY` 可以从观测云空间 [集成 -> Datakit](https://console.guance.com/integration/datakit) 页面上复制，一般为：
 > `https://openway.guance.com?token=tkn_xxxxxxxxxxxxxxxxxx` 格式。
 
-> 除了上述在启动命令中直接设置 `DK_DATAWAY`环境变量外， 还可以通过修改项目根目录下的 `.env` 文件来设置更多的环境变量。
+> 除了上述在启动命令中直接设置 `DK_DATAWAY`环境变量外， 还可以通过修改项目根目录下的 `.env` 文件来设置更多其他的环境变量。
