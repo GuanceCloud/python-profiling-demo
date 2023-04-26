@@ -80,10 +80,24 @@ $ curl 'http://127.0.0.1:8080/movies?q=spider' | jq
 
 ## Docker 下运行
 
+- 如果没有安装 `docker-compose`，请先参照 [install docker-compose](https://docs.docker.com/compose/install/) 或自行搜索教程进行安装。
+
+- 启动服务并访问
+
 ```shell
-$ docker build --build-arg DK_DATAWAY=<your-dataway-endpoint> -t python-profiling-demo .
-$ docker run -d python-profiling-demo
+$ git clone https://github.com/GuanceCloud/python-profiling-demo.git
+$ cd python-profiling-demo
+$ DK_DATAWAY=<your-dataway-url> docker-compose up -d
+$ curl 'http://127.0.0.1:8080/movies?q=spider'
 ```
 
-> DK_DATAWAY可以从观测云空间 [集成 -> Datakit](https://console.guance.com/integration/datakit) 页面复制，例如：
-> docker build --build-arg DK_DATAWAY=https://openway.guance.com?token=tkn_f5b2989ba6ab44bc988cf7e2aa4a6de3 -t python-profiling-demo .
+- 停止服务
+
+```shell
+$ docker-compose down
+```
+
+> `DK_DATAWAY` 可以从观测云空间 [集成 -> Datakit](https://console.guance.com/integration/datakit) 页面上复制，一般为：
+> `https://openway.guance.com?token=tkn_xxxxxxxxxxxxxxxxxx` 格式。
+
+> 除了上述在启动命令中直接设置 `DK_DATAWAY`环境变量外， 还可以通过修改项目根目录下的 `.env` 文件来设置更多的环境变量。
