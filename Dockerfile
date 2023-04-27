@@ -4,7 +4,6 @@ LABEL authors="guance.com" \
 WORKDIR /usr/local/python-profiling-demo
 COPY . ./
 RUN pip install --no-cache-dir -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
-RUN pip cache purge
 
 ENV DD_SERVICE "python-profiling-demo"
 ENV DD_VERSION "v0.0.1"

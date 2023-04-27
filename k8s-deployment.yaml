@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-python
+  labels:
+    app: movies-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movies-python
+  template:
+    metadata:
+      name: movies-python
+      labels:
+        app: movies-python
+    spec:
+      shareProcessNamespace: true
+      containers:
+        - name: movies-python
+          image: zhangyicloud/movies:0.3.0-python
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+        - name: datakit-profiler
+          image: zhangyicloud/py-spy:0.1.0
+          imagePullPolicy: IfNotPresent
+          workingDir: /app/datakit-profiler
+          lifecycle:
+            postStart:
+              exec:
+                command: ["ln", "-sf", "/usr/share/zoneinfo/Asia/Shanghai", "/etc/localtime"]
+          command: ["sleep", "infinity"]
+          securityContext:
+            capabilities:
+              add:
+                - SYS_PTRACE
+      restartPolicy: Always
