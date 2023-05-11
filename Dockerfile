@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.10.11-bullseye
 LABEL authors="guance.com" \
       email="zhangyi905@guance.com"
 WORKDIR /usr/local/python-profiling-demo

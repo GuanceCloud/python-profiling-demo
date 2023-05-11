@@ -18,21 +18,41 @@ spec:
       shareProcessNamespace: true
       containers:
         - name: movies-python
-          image: zhangyicloud/movies:0.3.0-python
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8080
+          image: zhangyicloud/movies-python:latest
+          imagePullPolicy: Always
+
         - name: datakit-profiler
-          image: zhangyicloud/py-spy:0.1.0
+          image: pubrepo.jiagouyun.com/dataflux/py-spy:0.1.0
           imagePullPolicy: IfNotPresent
           workingDir: /app/datakit-profiler
-          lifecycle:
-            postStart:
-              exec:
-                command: ["ln", "-sf", "/usr/share/zoneinfo/Asia/Shanghai", "/etc/localtime"]
-          command: ["sleep", "infinity"]
+          env:
+            - name: DK_AGENT_HOST # datakit listening host
+              value: "192.168.209.128"
+            - name: DK_AGENT_PORT # datakit listening port
+              value: "9529"
+            - name: DK_PROFILE_VERSION # user's app version
+              value: "1.2.333"
+            - name: DK_PROFILE_ENV # user's app run env
+              value: "prod"
+            - name: DK_PROFILE_DURATION # profiling duration at every time
+              value: "240"
+            - name: DK_PROFILE_SCHEDULE # profiling schedule plan
+              value: "*/20 * * * *"
+          command:
+            - bash
+            - "-c"
+            - "./profiling.sh --add-crontab; cron -f"
           securityContext:
             capabilities:
               add:
                 - SYS_PTRACE
+          volumeMounts:
+            - mountPath: /etc/localtime
+              name: timezone
+              readOnly: true
       restartPolicy: Always
+      volumes:
+        - name: timezone
+          hostPath:
+            path: /etc/localtime
+            type: FileOrCreate
