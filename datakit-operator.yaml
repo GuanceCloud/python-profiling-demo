@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-python
+  labels:
+    app: movies-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movies-python
+  template:
+    metadata:
+      name: movies-python
+      labels:
+        app: movies-python
+      annotations:
+        admission.datakit/python-profiler.version: "latest"
+    spec:
+      containers:
+        - name: movies-python
+          image: zhangyicloud/movies-python:latest
+          imagePullPolicy: Always
+          command:
+            - python
+            - "server.py"

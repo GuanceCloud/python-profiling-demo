@@ -5,14 +5,25 @@ import json
 import os
 import re
 from typing import List, Optional, TypeVar, Callable
+from ddtrace import tracer
+import logging
+from ddtrace import patch
+
+patch(logging=True)
 
 from flask import Flask, request, jsonify
 
 import ddtrace.profiling.auto
 
-
 I = TypeVar('I')
 O = TypeVar('O')
+
+FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
+          '[dd.service=%(dd.service)s dd.env=%(dd.env)s dd.version=%(dd.version)s dd.trace_id=%(dd.trace_id)s dd.span_id=%(dd.span_id)s] '
+          '- %(message)s')
+logging.basicConfig(format=FORMAT)
+log = logging.getLogger(__name__)
+log.level = logging.DEBUG
 
 
 def convert_or_none(v: Optional[I], converter: Callable[[I], O]) -> Optional[O]:
@@ -57,7 +68,11 @@ def main():
 
 
 @app.route('/movies')
+@tracer.wrap()
 def movies():
+
+    log.info("/movies receive request")
+
     query: str = request.args.get("q", request.args.get("query"))
 
     movies = get_movies()
