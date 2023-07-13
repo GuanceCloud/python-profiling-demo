@@ -4,6 +4,7 @@ import gzip
 import json
 import os
 import re
+import time
 from typing import List, Optional, TypeVar, Callable
 from ddtrace import tracer
 import logging
@@ -70,24 +71,32 @@ def main():
 @app.route('/movies')
 @tracer.wrap()
 def movies():
-
     log.info("/movies receive request")
 
     query: str = request.args.get("q", request.args.get("query"))
 
-    movies = get_movies()
+    movies_list = get_movies()
+
+    fib = fibonacci(43)
+    log.info("fibonacci(43) = %d", fib)
 
     # Problem: We are sorting over the entire list but might be filtering most of it out later.
     # Solution: Sort after filtering
-    movies = sort_desc_releasedate(movies)
+    movies_list = sort_desc_release_date(movies_list)
 
     if query:
-        movies = [m for m in movies if re.search(query.upper(), m.title.upper())]
+        movies_list = [m for m in movies_list if re.search(query.upper(), m.title.upper())]
 
-    return jsonify([m.to_dict() for m in movies])
+    return jsonify([m.to_dict() for m in movies_list])
 
 
-def sort_desc_releasedate(movies: List[Movie]) -> List[Movie]:
+def fibonacci(num: int):
+    if num <= 2:
+        return 1
+    return fibonacci(num-1) + fibonacci(num-2)
+
+
+def sort_desc_release_date(movies_list: List[Movie]) -> List[Movie]:
     # Problem: We are parsing a datetime for each comparison during sort
     # Example Solution:
     #   Since date is in isoformat (yyyy-mm-dd) already, that one sorts nicely with normal string sorting
@@ -103,7 +112,7 @@ def sort_desc_releasedate(movies: List[Movie]) -> List[Movie]:
             m2_dt = datetime.date.min
         return int((m1_dt - m2_dt).total_seconds())
 
-    return sorted(movies, key=functools.cmp_to_key(sorting_cmp), reverse=True)
+    return sorted(movies_list, key=functools.cmp_to_key(sorting_cmp), reverse=True)
 
 
 def get_movies() -> List[Movie]:
