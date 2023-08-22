@@ -23,4 +23,4 @@ spec:
           imagePullPolicy: Always
           command:
             - python
-            - "server.py"
+            - "app.py"

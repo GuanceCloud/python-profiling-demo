@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: Always
           command:
             - python
-            - "server.py"
+            - "app.py"
 
         - name: datakit
           image: pubrepo.jiagouyun.com/datakit/datakit:1.6.0

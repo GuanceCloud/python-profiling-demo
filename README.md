@@ -20,7 +20,7 @@ DD_VERSION=v0.0.1 \
 DD_PROFILING_ENABLED=true \
 DD_AGENT_HOST=localhost \
 DD_TRACE_AGENT_PORT=9529 \
-ddtrace-run python3 server.py
+ddtrace-run python3 app.py
 ```
 
 ### 验证运行状态
