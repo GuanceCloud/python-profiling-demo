@@ -77,8 +77,9 @@ def movies():
 
     movies_list = get_movies()
 
-    fib = fibonacci(43)
-    log.info("fibonacci(43) = %d", fib)
+    num = 41
+    fib = fibonacci(num)
+    log.info("fibonacci(%d) = %d", num, fib)
 
     # Problem: We are sorting over the entire list but might be filtering most of it out later.
     # Solution: Sort after filtering

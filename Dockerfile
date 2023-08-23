@@ -12,4 +12,4 @@ ENV DD_TRACE_AGENT_PORT 9529
 ENV DD_TRACE_ENABLED true
 ENV DD_PROFILING_ENABLED true
 
-CMD ["ddtrace-run", "python", "app.py"]
+CMD ["ddtrace-run", "gunicorn", "-w", "4", "--bind", "0.0.0.0:8080", "app:app"]
