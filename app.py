@@ -77,7 +77,11 @@ def movies():
 
     movies_list = get_movies()
 
-    num = 41
+    num = 40
+    fib = fibonacci(num)
+    log.info("fibonacci(%d) = %d", num, fib)
+
+    num = 39
     fib = fibonacci(num)
     log.info("fibonacci(%d) = %d", num, fib)
 

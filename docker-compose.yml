@@ -8,7 +8,7 @@ services:
     environment:
       DD_AGENT_HOST: "datakit"
   datakit:
-    image: pubrepo.jiagouyun.com/datakit/datakit:1.6.0
+    image: pubrepo.jiagouyun.com/datakit/datakit:1.13.2
     container_name: datakit
     environment:
       ENV_DATAWAY: "${DK_DATAWAY}"
